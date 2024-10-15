@@ -55,6 +55,11 @@ def add_requirement(
         assert req.name != old_name
         requirements.pop(old_name, None)
 
+    if req.extras: # expand extras
+        for r in req.extras:
+            add_requirement(r, requirements)
+        req.extras = {}
+
     if req.name not in requirements:
         requirements[req.name] = req
     elif mode == "combine":
